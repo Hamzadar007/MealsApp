@@ -1,12 +1,21 @@
 import React from 'react'
-import {View,Text,StyleSheet,Button,FlatList} from 'react-native'
-import { CATEGORIES,MEALS } from "../data/dummy-data";
+import { CATEGORIES } from "../data/dummy-data";
+import {useSelector} from 'react-redux'
+import {Text,View,StyleSheet} from 'react-native'
 
 import MealList from '../components/MealList'
 const MealScreen=props=>{
-    const catId=props.navigation.getParam('CategoryId')
-    const displayedMeal=MEALS.filter(meal=>meal.CategoryIds.indexOf(catId)>=0)
+   const availableMeals=useSelector(state=>state.meals.filteredMeals);
 
+
+    const catId=props.navigation.getParam('CategoryId')
+    const displayedMeal=availableMeals.filter(meal=>meal.CategoryIds.indexOf(catId)>=0)
+    
+    if(displayedMeal.length===0|| !displayedMeal){
+        return <View style={styles.content}>
+            <Text>No meal found, maybe check your filters?</Text>
+        </View>
+    }
 
     return(
 <MealList showData={displayedMeal} navigation={props.navigation}/>
@@ -26,6 +35,11 @@ const styles=StyleSheet.create({
 screen:{
       flex:1
 },
+content:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center'
+}
 
 })
 export default MealScreen

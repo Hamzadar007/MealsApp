@@ -29,7 +29,7 @@ const CategoryScreen = props => {
 };
 CategoryScreen.navigationOptions = (navData)=>{
     return{
-    headerTitle: 'Meal Categries',
+   
     headerLeft:()=><HeaderButtons HeaderButtonComponent={HeaderButton}>
     <Item title='Menu' iconName="md-menu" onPress={()=>{
        navData.navigation.toggleDrawer()
